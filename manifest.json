@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Edit-Generation-Model",
+  "name": "Meeting Agent",
   "version": "1.0",
   "description": "AI-powered meeting assistant that transcribes and summarizes your calls.",
   "permissions": [

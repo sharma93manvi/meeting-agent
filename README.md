@@ -1,4 +1,4 @@
-# Edit-Generation-Model
+# Meeting Agent
 
 A Chrome Extension that listens to your meetings, transcribes them in real-time, and generates summaries with follow-up tasks.
 

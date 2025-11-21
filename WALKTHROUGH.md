@@ -1,4 +1,4 @@
-# Edit-Generation-Model - Walkthrough
+# Meeting Agent - Walkthrough
 
 ## How to Install
 1.  Open Chrome and navigate to `chrome://extensions`.
