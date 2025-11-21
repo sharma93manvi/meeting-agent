@@ -6,26 +6,25 @@ A Chrome Extension that listens to your meetings, transcribes them in real-time,
 
 ### Core Platform
 *   **Chrome Extension (Manifest V3)**: Uses the latest web extension standard for security and performance.
-*   **Service Worker**: Handles background processes and state management.
+*   **Python Backend (Flask)**: Handles business logic, AI processing, and summarization.
 
 ### Key APIs
-*   **`chrome.tabCapture`**: Captures audio streams directly from the active tab (e.g., Google Meet, Zoom Web).
-*   **Offscreen Document**: A hidden HTML page used to run DOM-dependent APIs like Web Speech, which are not available in Service Workers.
-*   **Web Speech API**: Built-in browser API for real-time speech-to-text transcription (free and privacy-focused).
-*   **`chrome.storage.local`**: Local persistence for meeting history and transcripts.
+*   **`chrome.tabCapture`**: Captures audio streams directly from the active tab.
+*   **Web Speech API**: Built-in browser API for real-time speech-to-text transcription.
+*   **`chrome.storage.local`**: Local persistence for meeting history.
 
 ### User Interface
-*   **Vanilla HTML/CSS/JS**: Lightweight implementation without heavy frameworks to ensure instant load times.
-*   **CSS Variables**: Modern styling for a consistent, premium look.
+*   **Vanilla HTML/CSS/JS**: Lightweight implementation.
+*   **CSS Variables**: Modern styling.
 
 ## Implementation Steps
 
-1.  **Project Scaffold**: Set up the Manifest V3 structure with `background`, `popup`, and `offscreen` components.
-2.  **Audio Capture**: Implemented `chrome.tabCapture` in the background script to get the media stream of the active tab.
-3.  **Transcription Engine**: Created an offscreen document to process the audio stream using `webkitSpeechRecognition`.
-4.  **Data Persistence**: Connected the transcription output to `chrome.storage.local` to save progress in real-time.
-5.  **Dashboard UI**: Built a dedicated dashboard page to view past meetings, transcripts, and summaries.
-6.  **Summarization Logic**: Added a mock AI service to demonstrate how transcripts are converted into summaries and action items.
+1.  **Project Scaffold**: Set up the Manifest V3 structure.
+2.  **Audio Capture**: Implemented `chrome.tabCapture` in the background script.
+3.  **Transcription Engine**: Created an offscreen document for `webkitSpeechRecognition`.
+4.  **Python Server**: Built a Flask server (`server/app.py`) to handle summarization requests.
+5.  **Dashboard UI**: Connected the dashboard to the local Python backend.
+6.  **Summarization Logic**: Implemented dynamic processing in Python.
 
 ## How to Run
 

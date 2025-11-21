@@ -25,8 +25,22 @@
     *   Click **Open Dashboard**.
     *   You should see a new entry in the list.
     *   Click **Show Transcript** to see the text.
-    *   Click **Generate Summary** to see the AI summary (Mocked for MVP).
+    *   Click **Generate Summary** to see the AI summary.
+    *   *Note: Ensure the Python backend is running for this to work!*
+
+## Running the Python Backend
+1.  **Install Dependencies**:
+    ```bash
+    cd server
+    pip install -r requirements.txt
+    ```
+2.  **Start Server**:
+    ```bash
+    python app.py
+    ```
+    *   You should see: `Running on http://127.0.0.1:5000`
 
 ## Troubleshooting
+*   **Backend Error?** Make sure the Python server is running in a separate terminal.
 *   **No Transcript?** Make sure you selected the correct tab and "Share tab audio" was enabled when the permission prompt appeared.
 *   **Error?** Check the extension errors in `chrome://extensions`.

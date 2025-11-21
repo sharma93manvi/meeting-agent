@@ -58,26 +58,46 @@ async function generateSummary(index, meetings) {
     btn.textContent = "Generating...";
     btn.disabled = true;
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
     const meeting = meetings[index];
-    // Mock response
-    meeting.summary = "This was a productive meeting discussing the new project architecture. The team agreed to use a Chrome Extension with local storage.";
-    meeting.tasks = [
-        "Create the project scaffold",
-        "Implement audio capture",
-        "Design the dashboard UI"
-    ];
 
-    // Update storage
-    // Note: We need to reverse the index back to original array or just reload
-    // Since we reversed for display, let's just find it in the original data
-    const originalData = await chrome.storage.local.get('meetings');
-    const realIndex = originalData.meetings.length - 1 - index; // Assuming no deletions for now
+    try {
+        // Call Python Backend
+        const response = await fetch('http://localhost:5000/summarize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                transcript: meeting.transcript
+            })
+        });
 
-    originalData.meetings[realIndex] = meeting;
-    await chrome.storage.local.set({ meetings: originalData.meetings });
+        if (!response.ok) {
+            throw new Error('Backend failed');
+        }
 
-    renderMeetings();
+        const result = await response.json();
+
+        meeting.summary = result.summary;
+        meeting.tasks = result.tasks;
+
+        // Update storage
+        const originalData = await chrome.storage.local.get('meetings');
+        // Find the correct meeting to update in the original array
+        // We match by timestamp to be safe
+        const realIndex = originalData.meetings.findIndex(m => m.timestamp === meeting.timestamp);
+
+        if (realIndex !== -1) {
+            originalData.meetings[realIndex] = meeting;
+            await chrome.storage.local.set({ meetings: originalData.meetings });
+        }
+
+        renderMeetings();
+
+    } catch (error) {
+        console.error('Error generating summary:', error);
+        btn.textContent = "Error - Is Server Running?";
+        btn.disabled = false;
+        alert("Could not connect to Python Backend. Make sure 'python server/app.py' is running!");
+    }
 }
